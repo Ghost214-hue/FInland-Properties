@@ -1,19 +1,108 @@
 @import "tailwindcss";
 
+/* Base styles */
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+  
+  body {
+    @apply overflow-x-hidden;
+  }
+}
 
-
+/* Custom animations */
 @layer utilities {
-    .animate-in {
-        animation-fill-mode: both;
+  @keyframes slideFromTop {
+    from {
+      transform: translateY(-100%);
+      opacity: 0;
     }
-
-    .slide-in-from-top {
-        animation-name: slideFromTop;
+    to {
+      transform: translateY(0);
+      opacity: 1;
     }
-
-    .duration-300 {
-        animation-duration: 300ms;
+  }
+  
+  @keyframes slideFromBottom {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
     }
-
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  .animate-in {
+    animation-fill-mode: both;
+    animation-duration: 300ms;
+  }
+  
+  .slide-in-from-top {
+    animation-name: slideFromTop;
+  }
+  
+  .slide-in-from-bottom {
+    animation-name: slideFromBottom;
+  }
+  
+  .fade-in {
+    animation-name: fadeIn;
+  }
+  
+  .duration-300 {
+    animation-duration: 300ms;
+  }
+  
+  .duration-500 {
+    animation-duration: 500ms;
+  }
+  
+  /* Custom breakpoint for extra small screens */
+  @media (min-width: 480px) {
+    .xs\:inline {
+      display: inline;
+    }
     
+    .xs\:hidden {
+      display: none;
+    }
+  }
+}
+
+/* Ensure proper box sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Prevent horizontal scroll on all elements */
+html,
+body {
+  overflow-x: hidden;
+  position: relative;
+  width: 100%;
+}
+
+/* Ensure images don't overflow */
+img,
+picture,
+video,
+canvas,
+svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
