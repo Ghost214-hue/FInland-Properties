@@ -3,14 +3,14 @@ import { useState, useEffect } from "react";
 import { X, Menu, Phone } from "lucide-react";
 
 const navLinks = [
-  { href: "#home", label: "Home" },
-  { href: "#about", label: "About" },
-  { href: "#features", label: "Features" },
-  { href: "#location", label: "Location" },
-  { href: "#choose", label: "Why Us" },
-  { href: "#step", label: "Process" },
+  { href: "#home",         label: "Home" },
+  { href: "#about",        label: "About" },
+  { href: "#features",     label: "Features" },
+  { href: "#location",     label: "Location" },
+  { href: "#choose",       label: "Why Us" },
+  { href: "#step",         label: "Process" },
   { href: "#testimonials", label: "Testimonials" },
-  { href: "#contact", label: "Contact" },
+  { href: "#contact",      label: "Contact" },
 ];
 
 export default function Navbar() {
@@ -18,7 +18,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    const handleScroll = () => setScrolled(window.scrollY > 24);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -27,57 +27,67 @@ export default function Navbar() {
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-500
         ${scrolled
-          ? "bg-gray-950/95 backdrop-blur-xl shadow-lg shadow-black/40 border-b border-emerald-500/20"
-          : "bg-gray-950/70 backdrop-blur-md border-b border-emerald-500/10"
+          ? "bg-white/90 backdrop-blur-2xl border-b border-green-200 shadow-xl shadow-green-900/10"
+          : "bg-white/80 backdrop-blur-xl border-b border-green-100 shadow-md shadow-green-900/5"
         }`}
     >
+      {/* Top accent stripe */}
+      <div className="h-0.75 w-full bg-linear-to-r from-green-400 via-emerald-500 to-teal-500" />
+
       {/* ── MAIN BAR ── */}
       <div className="max-w-screen-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20 gap-4">
+        <div className="flex items-center justify-between h-16 md:h-18 gap-4">
 
-          {/* LOGO */}
-          <a
-            href="#home"
-            className="flex items-center gap-3 hrink-0 group"
-          >
-            {/* Icon badge */}
-            <div className="w-9 h-9 rounded-xl bg-linear-to-br from-emerald-700 to-emerald-900
-              border border-emerald-500/40 flex items-center justify-center
-              shadow-[0_0_16px_rgba(52,211,153,0.2)] group-hover:shadow-[0_0_24px_rgba(52,211,153,0.35)]
-              transition-shadow duration-300 shrink-0">
-              <img
-                src={hero}
-                alt="Finland Properties logo"
-                className="w-5 h-5 object-contain brightness-0 invert"
-              />
+          {/* ── LOGO ── */}
+          <a href="#home" className="flex items-center gap-3 shrink-0 group">
+            {/* Badge */}
+            <div className="relative w-10 h-10 shrink-0">
+              <div className="absolute inset-0 rounded-xl bg-green-400/30 blur-md
+                scale-110 group-hover:scale-125 transition-transform duration-300" />
+              <div className="relative w-10 h-10 rounded-xl
+                bg-linear-to-br from-green-500 via-emerald-600 to-teal-600
+                border border-green-300 flex items-center justify-center
+                shadow-md shadow-green-500/30">
+                <img
+                  src={hero}
+                  alt="logo"
+                  className="w-5 h-5 object-contain brightness-0 invert"
+                />
+              </div>
             </div>
 
             {/* Word-mark */}
-            <span className="text-xl sm:text-2xl md:text-[1.6rem] font-extrabold tracking-tight leading-none">
-              <span className="text-emerald-400 group-hover:text-emerald-300 transition-colors duration-200">
-                Finland
+            <div className="leading-none">
+              <span className="block text-xl sm:text-2xl font-extrabold tracking-tight">
+                <span className="text-green-900 group-hover:text-green-700 transition-colors duration-200">
+                  Finland
+                </span>
+                <span className="text-emerald-500 font-bold">
+                  {" "}Properties
+                </span>
               </span>
-              <span className="text-emerald-100/40 font-semibold">
-                {" "}Properties
+              <span className="text-[0.6rem] uppercase tracking-[0.18em] text-green-600 font-semibold">
+                Land &amp; Real Estate
               </span>
-            </span>
+            </div>
           </a>
 
           {/* ── DESKTOP NAV LINKS ── */}
-          <div className="hidden lg:flex items-center gap-1 flex-1 justify-center">
+          <div className="hidden lg:flex items-center gap-0.5 flex-1 justify-center">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="relative px-3 py-2 text-[0.78rem] font-semibold uppercase tracking-widest
-                  text-emerald-100/50 hover:text-emerald-300 transition-colors duration-200
-                  group"
+                className="relative px-3 py-2 rounded-lg
+                  text-[0.76rem] font-bold uppercase tracking-widest
+                  text-green-900 hover:text-green-700
+                  hover:bg-green-50 transition-all duration-200 group"
               >
                 {link.label}
-                {/* animated underline */}
-                <span className="absolute bottom-0 left-3 right-3 h-px bg-linear-to-r
-                  from-emerald-400 to-emerald-300 scale-x-0 group-hover:scale-x-100
-                  transition-transform duration-300 origin-left rounded-full" />
+                <span className="absolute bottom-1 left-3 right-3 h-05 rounded-full
+                  bg-linear-to-r from-green-400 via-emerald-500 to-teal-400
+                  scale-x-0 group-hover:scale-x-100
+                  transition-transform duration-300 origin-left" />
               </a>
             ))}
           </div>
@@ -85,35 +95,42 @@ export default function Navbar() {
           {/* ── RIGHT SECTION ── */}
           <div className="flex items-center gap-3 shrink-0">
 
-            {/* Contact info — hidden on small screens */}
+            {/* Divider */}
+            <div className="hidden sm:block h-8 w-px bg-linear-to-b
+              from-transparent via-green-300 to-transparent" />
+
+            {/* Contact info */}
             <div className="hidden sm:flex flex-col items-end leading-tight">
-              <span className="text-[0.65rem] uppercase tracking-[0.12em] text-emerald-100/30 font-medium">
+              <span className="text-[0.6rem] uppercase tracking-[0.14em] text-green-500 font-bold">
                 Direct Line
               </span>
-              <span className="text-sm font-bold text-emerald-400 tracking-wide">
+              <span className="text-sm font-extrabold text-green-900 tracking-wide">
                 123-456-7890
               </span>
             </div>
 
-            {/* CTA button — hidden on mobile */}
+            {/* CTA */}
             <button
-              className="hidden sm:inline-flex items-center gap-2 bg-linear-to-r from-emerald-500 to-emerald-700
-                hover:from-emerald-400 hover:to-emerald-600 text-gray-950 font-bold text-[0.75rem]
-                uppercase tracking-widest px-5 py-2.5 rounded-lg transition-all duration-200
-                shadow-[0_0_20px_rgba(52,211,153,0.25)] hover:shadow-[0_0_28px_rgba(52,211,153,0.45)]
-                hover:-translate-y-px active:translate-y-0"
+              className="hidden sm:inline-flex items-center gap-2
+                bg-linear-to-br from-green-500 via-emerald-600 to-teal-600
+                hover:from-green-400 hover:via-emerald-500 hover:to-teal-500
+                text-white font-extrabold text-[0.72rem] uppercase tracking-widest
+                px-5 py-2.5 rounded-xl transition-all duration-200
+                shadow-lg shadow-green-600/30 hover:shadow-xl hover:shadow-green-500/40
+                hover:-translate-y-0.5 active:translate-y-0 border border-green-400/40"
             >
               <Phone className="w-3.5 h-3.5" />
               Contact Sales
             </button>
 
-            {/* Hamburger — mobile/tablet only */}
+            {/* Hamburger */}
             <button
               onClick={() => setIsMobileMenuOpen((prev) => !prev)}
               aria-label="Toggle menu"
-              className="lg:hidden flex items-center justify-center w-9 h-9 rounded-lg
-                bg-emerald-500/10 border border-emerald-500/20 text-emerald-400
-                hover:bg-emerald-500/20 hover:text-emerald-300 transition-all duration-200"
+              className="lg:hidden flex items-center justify-center w-9 h-9 rounded-xl
+                bg-green-100 border border-green-200 text-green-800
+                hover:bg-green-200 hover:text-green-900
+                transition-all duration-200 shadow-sm"
             >
               {isMobileMenuOpen
                 ? <X className="w-5 h-5" />
@@ -126,44 +143,63 @@ export default function Navbar() {
 
       {/* ── MOBILE MENU ── */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden bg-gray-950/98 border-t border-emerald-500/10
-          animate-in slide-in-from-top-2 duration-200">
-          <div className="max-w-screen-7xl mx-auto px-4 sm:px-6 py-4 space-y-0.5">
+        <div className="lg:hidden bg-white/95 backdrop-blur-2xl
+          border-t border-green-200 shadow-2xl shadow-green-900/10
+          animate-in slide-in-from-top-3 duration-300">
+          <div className="max-w-screen-7xl mx-auto px-4 sm:px-6 py-3">
 
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="flex items-center gap-3 px-2 py-3 rounded-lg text-[0.82rem] font-semibold
-                  uppercase tracking-widest text-emerald-100/50 hover:text-emerald-300
-                  hover:bg-emerald-500/8 border-b border-emerald-500/8 last:border-b-0
-                  transition-all duration-150 group"
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/40
-                  group-hover:bg-emerald-400 group-hover:scale-150
-                  transition-all duration-200 shrink-0" />
-                {link.label}
-              </a>
-            ))}
+            <div className="grid grid-cols-2 gap-1 mb-3">
+              {navLinks.map((link, i) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center gap-2.5 px-3 py-3 rounded-xl
+                    text-[0.78rem] font-bold uppercase tracking-wider
+                    text-green-900 hover:text-green-700
+                    hover:bg-green-50 border border-transparent hover:border-green-200
+                    transition-all duration-150 group"
+                >
+                  <span className={`w-2 h-2 rounded-full shrink-0 transition-transform
+                    duration-200 group-hover:scale-125
+                    ${i % 4 === 0 ? "bg-green-400"
+                    : i % 4 === 1 ? "bg-emerald-500"
+                    : i % 4 === 2 ? "bg-teal-500"
+                    : "bg-green-600"}`}
+                  />
+                  {link.label}
+                </a>
+              ))}
+            </div>
 
-            {/* Mobile bottom row: phone + CTA */}
-            <div className="pt-4 pb-2 flex items-center justify-between gap-4 flex-wrap
-              border-t border-emerald-500/10 mt-2">
-              <div className="flex items-center gap-2 text-emerald-400">
-                <Phone className="w-4 h-4" />
-                <span className="font-bold text-sm tracking-wide">123-456-7890</span>
+            <div className="h-px bg-linear-to-r from-transparent via-green-300 to-transparent mb-3" />
+
+            <div className="flex items-center justify-between gap-3 flex-wrap pb-1">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg bg-green-100 border border-green-200
+                  flex items-center justify-center">
+                  <Phone className="w-4 h-4 text-green-700" />
+                </div>
+                <div>
+                  <p className="text-[0.58rem] uppercase tracking-[0.14em] text-green-500 font-bold leading-none mb-0.5">
+                    Direct Line
+                  </p>
+                  <p className="text-sm font-extrabold text-green-900 tracking-wide leading-none">
+                    123-456-7890
+                  </p>
+                </div>
               </div>
-              <button
-                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2
-                  bg-linear-to-r from-emerald-500 to-emerald-700
-                  hover:from-emerald-400 hover:to-emerald-600
-                  text-gray-950 font-bold text-[0.75rem] uppercase tracking-widest
-                  px-5 py-2.5 rounded-lg transition-all duration-200
-                  shadow-[0_0_20px_rgba(52,211,153,0.2)]"
-              >
+
+              <button className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2
+                bg-linear-to-br from-green-500 via-emerald-600 to-teal-600
+                text-white font-extrabold text-[0.72rem] uppercase tracking-widest
+                px-5 py-2.5 rounded-xl border border-green-400/40
+                shadow-lg shadow-green-600/25 transition-all duration-200
+                hover:from-green-400 hover:via-emerald-500 hover:to-teal-500">
                 <Phone className="w-3.5 h-3.5" />
-                Contact Sales
+               <a href="#contact" className="text-white">
+                  Contact Sales
+                </a>
               </button>
             </div>
 
