@@ -9,22 +9,22 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
-function App(){
+function App() {
 
   return (
-  <div>
-    <Navbar />
-    <Hero />
-    <Features />
-    <Location />
-    <Choose />
-    <Step />
-    <Testimonials />
-    <About />
-    <Contact />
-    <Footer />
+    <div>
+      <Navbar />
+      <Hero />
+      <About />
+      <Features />
+      <Testimonials />
+      <Location />
+      <Choose />
+      <Step />
+      <Contact />
+      <Footer />
 
-  </div>
+    </div>
   )
 }
 export default App;
