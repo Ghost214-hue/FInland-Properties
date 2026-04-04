@@ -4,7 +4,7 @@ import Features from "./components/Features";
 import Location from "./components/Location";
 import Choose from "./components/Choose";
 import Step from "./components/Step";
-import Testimonials from "./components/Testimonials";
+import Team from "./components/Team";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
@@ -17,8 +17,8 @@ function App() {
       <Hero />
       <About />
       <Features />
-      <Testimonials />
-      <Location />
+       <Location />
+      <Team />
       <Choose />
       <Step />
       <Contact />
