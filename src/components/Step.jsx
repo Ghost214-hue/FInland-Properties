@@ -32,7 +32,7 @@ export default function Step() {
             <div className="absolute bottom-0 right-0 w-96 h-96 rounded-full
                 bg-teal-100/30 blur-3xl pointer-events-none" />
 
-            <div className="relative z-10 max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="relative z-10 max-w-screen-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
                 {/* ── HEADER ── */}
                 <div className="flex flex-col items-center text-center gap-4 mb-16 sm:mb-24">
