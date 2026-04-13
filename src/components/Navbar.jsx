@@ -3,14 +3,14 @@ import { useState, useEffect } from "react";
 import { X, Menu, Phone } from "lucide-react";
 
 const navLinks = [
-  { href: "#home",         label: "Home" },
-  { href: "#about",        label: "About" },
-  { href: "#features",     label: "Properties" },
-  { href: "#location",     label: "Location" },
-  { href: "#choose",       label: "Why Us" },
-  { href: "#step",         label: "Process" },
+  { href: "#home", label: "Home" },
+  { href: "#about", label: "About" },
+  { href: "#features", label: "Properties" },
+  { href: "#location", label: "Location" },
+  { href: "#choose", label: "Why Us" },
+  { href: "#step", label: "Process" },
   { href: "#team", label: "Our Team" },
-  { href: "#contact",      label: "Contact" },
+  { href: "#contact", label: "Contact" },
 ];
 
 export default function Navbar() {
@@ -38,7 +38,7 @@ export default function Navbar() {
           }`}
       >
         {/* Top accent stripe */}
-        <div className="h-0.75 w-full bg-gradient-to-r from-green-400 via-emerald-500 to-teal-500" />
+        <div className="h-0.75 w-full bg-linear-to-r from-green-400 via-emerald-500 to-teal-500" />
 
         {/* ── MAIN BAR ── */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -64,7 +64,7 @@ export default function Navbar() {
               <div className="leading-none">
                 <span className="block text-base sm:text-xl md:text-2xl font-extrabold tracking-tight">
                   <span className="text-green-900 group-hover:text-green-700 transition-colors duration-200">
-                    Finland
+                    Fineland
                   </span>
                   <span className="text-emerald-500 font-bold">
                     {" "}Properties
@@ -169,9 +169,9 @@ export default function Navbar() {
                     <span className={`w-2 h-2 rounded-full shrink-0 transition-transform
                       duration-200 group-hover:scale-125
                       ${i % 4 === 0 ? "bg-green-400"
-                      : i % 4 === 1 ? "bg-emerald-500"
-                      : i % 4 === 2 ? "bg-teal-500"
-                      : "bg-green-600"}`}
+                        : i % 4 === 1 ? "bg-emerald-500"
+                          : i % 4 === 2 ? "bg-teal-500"
+                            : "bg-green-600"}`}
                     />
                     {link.label}
                   </a>
