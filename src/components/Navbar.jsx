@@ -64,7 +64,7 @@ export default function Navbar() {
               <div className="leading-none">
                 <span className="block text-base sm:text-xl md:text-2xl font-extrabold tracking-tight">
                   <span className="text-green-900 group-hover:text-green-700 transition-colors duration-200">
-                    Finland
+                    Fineland
                   </span>
                   <span className="text-emerald-500 font-bold">
                     {" "}Properties
