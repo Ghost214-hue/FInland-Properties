@@ -1,94 +1,131 @@
-import { useState } from 'react';
-import { Phone, Mail, MapPin, Clock, Send, CheckCircle } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Phone, Mail, MapPin, Clock, Send, CheckCircle, Globe, Users } from 'lucide-react';
+import { client } from '../sanityClient';
 
-const contactDetails = [
-    {
-        icon: <Phone className="w-5 h-5 text-white" />,
-        iconBg: "from-green-500 to-emerald-700",
-        label: "Phone",
-        value: "123-456-7890",
-        sub: "Mon – Sat, 8am – 6pm",
-        href: "tel:1234567890",
-    },
-    {
-        icon: <Mail className="w-5 h-5 text-white" />,
-        iconBg: "from-emerald-500 to-teal-700",
-        label: "Email",
-        value: "info@finlandproperties.com",
-        sub: "We reply within 24 hours",
-        href: "mailto:info@finlandproperties.com",
-    },
-    {
-        icon: <MapPin className="w-5 h-5 text-white" />,
-        iconBg: "from-teal-500 to-green-700",
-        label: "Office",
-        value: "Nairobi, Kenya",
-        sub: "Visit us by appointment",
-        href: "#",
-    },
-    {
-        icon: <Clock className="w-5 h-5 text-white" />,
-        iconBg: "from-green-600 to-emerald-800",
-        label: "Working Hours",
-        value: "Mon – Sat: 8am – 6pm",
-        sub: "Sunday: Closed",
-        href: null,
-    },
-];
+// ── Map icon string from Sanity → actual component ──
+const iconMap = {
+    phone:  <Phone  className="w-5 h-5 text-white" />,
+    mail:   <Mail   className="w-5 h-5 text-white" />,
+    mapPin: <MapPin className="w-5 h-5 text-white" />,
+    clock:  <Clock  className="w-5 h-5 text-white" />,
+    globe:  <Globe  className="w-5 h-5 text-white" />,
+    users:  <Users  className="w-5 h-5 text-white" />,
+};
+
+const EMPTY_FORM = { name: '', email: '', phone: '', message: '' };
 
 export default function Contact() {
-    const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' });
-    const [submitted, setSubmitted] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [data, setData]         = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
-    const handleChange = (e) => {
-        setForm({ ...form, [e.target.name]: e.target.value });
-    };
+    const [form, setForm]         = useState(EMPTY_FORM);
+    const [submitted, setSubmitted] = useState(false);
+    const [loading, setLoading]   = useState(false);
+
+    useEffect(() => {
+        client
+            .fetch(`*[_type == "contact"][0]{
+                badgeText,
+                headingPrefix,
+                headingHighlight,
+                subheading,
+                contactDetails[]{
+                    label,
+                    value,
+                    sub,
+                    href,
+                    icon,
+                    iconBg
+                },
+                quickNote,
+                formTitle,
+                formSubtitle,
+                formSubmitLabel,
+                successTitle,
+                successMessage
+            }`)
+            .then((res) => {
+                setData(res);
+                setIsLoading(false);
+            })
+            .catch((error) => {
+                console.error('Error fetching contact data:', error);
+                setIsLoading(false);
+            });
+    }, []);
+
+    const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
-        // Simulate submission — replace with your real API call
+        // Replace with your real API call
         setTimeout(() => {
             setLoading(false);
             setSubmitted(true);
         }, 1500);
     };
 
+    // ── LOADING ──
+    if (isLoading) {
+        return (
+            <div className="min-h-100 flex items-center justify-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600" />
+            </div>
+        );
+    }
+
+    // ── NO DATA ──
+    if (!data) return null;
+
+    const details = (data.contactDetails ?? []).filter(Boolean);
+
     return (
-        <section id="contact" className="relative py-20 sm:py-28 bg-linear-to-b from-green-50 to-white overflow-hidden">
+        <section id="contact" className="relative py-20 sm:py-28
+            bg-linear-to-b from-green-50 to-white overflow-hidden">
 
             {/* Decorative orbs */}
-            <div className="absolute top-0 left-0 w-80 h-80 rounded-full bg-green-200/25 blur-3xl pointer-events-none" />
-            <div className="absolute bottom-0 right-0 w-96 h-96 rounded-full bg-teal-200/20 blur-3xl pointer-events-none" />
+            <div className="absolute top-0 left-0 w-80 h-80 rounded-full
+                bg-green-200/25 blur-3xl pointer-events-none" />
+            <div className="absolute bottom-0 right-0 w-96 h-96 rounded-full
+                bg-teal-200/20 blur-3xl pointer-events-none" />
 
             <div className="relative z-10 max-w-screen-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
                 {/* ── HEADER ── */}
                 <div className="flex flex-col items-center text-center gap-4 mb-14 sm:mb-20">
-                    <span className="inline-flex items-center gap-2.5 px-5 py-2.5
-                        bg-white/80 backdrop-blur-md border border-green-200
-                        rounded-full text-xs font-bold uppercase tracking-widest
-                        text-green-700 shadow-md shadow-green-900/8">
-                        <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                        Get In Touch
-                    </span>
 
-                    <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight text-green-900">
-                        Contact{' '}
-                        <span className="relative inline-block">
-                            <span className="bg-linear-to-r from-green-600 via-emerald-500 to-teal-500 bg-clip-text text-transparent">
-                                Us
-                            </span>
-                            <span className="absolute -bottom-1 left-0 right-0 h-1 rounded-full
-                                bg-linear-to-r from-green-400 via-emerald-500 to-teal-400 opacity-70" />
+                    {data.badgeText && (
+                        <span className="inline-flex items-center gap-2.5 px-5 py-2.5
+                            bg-white/80 backdrop-blur-md border border-green-200
+                            rounded-full text-xs font-bold uppercase tracking-widest
+                            text-green-700 shadow-md shadow-green-900/8">
+                            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                            {data.badgeText}
                         </span>
+                    )}
+
+                    <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold
+                        tracking-tight leading-tight text-green-900">
+                        {data.headingPrefix}{' '}
+                        {data.headingHighlight && (
+                            <span className="relative inline-block">
+                                <span className="bg-linear-to-r from-green-600 via-emerald-500 to-teal-500
+                                    bg-clip-text text-transparent">
+                                    {data.headingHighlight}
+                                </span>
+                                <span className="absolute -bottom-1 left-0 right-0 h-1 rounded-full
+                                    bg-linear-to-r from-green-400 via-emerald-500 to-teal-400 opacity-70" />
+                            </span>
+                        )}
                     </h2>
 
-                    <p className="text-lg sm:text-xl text-green-800/70 font-medium max-w-2xl leading-relaxed">
-                        Have questions or want to learn more about our properties?
-                        We're here to help — reach out any time.
-                    </p>
+                    {data.subheading && (
+                        <p className="text-lg sm:text-xl text-green-800/70 font-medium
+                            max-w-2xl leading-relaxed">
+                            {data.subheading}
+                        </p>
+                    )}
                 </div>
 
                 {/* ── TWO COLUMN LAYOUT ── */}
@@ -97,53 +134,63 @@ export default function Contact() {
                     {/* ── LEFT: Contact Info ── */}
                     <div className="flex flex-col gap-5">
 
-                        <div className="flex flex-col gap-4">
-                            {contactDetails.map(({ icon, iconBg, label, value, sub, href }) => (
-                                <div key={label}
-                                    className="flex items-center gap-4 p-4 rounded-2xl
-                                        bg-white/80 backdrop-blur-md border border-green-100
-                                        hover:border-green-300 shadow-sm shadow-green-900/5
-                                        hover:-translate-y-0.5 transition-all duration-200 group">
+                        {details.length > 0 && (
+                            <div className="flex flex-col gap-4">
+                                {details.map(({ icon, iconBg, label, value, sub, href }) => (
+                                    <div key={label}
+                                        className="flex items-center gap-4 p-4 rounded-2xl
+                                            bg-white/80 backdrop-blur-md border border-green-100
+                                            hover:border-green-300 shadow-sm shadow-green-900/5
+                                            hover:-translate-y-0.5 transition-all duration-200 group">
 
-                                    {/* Icon badge */}
-                                    <div className={`w-11 h-11 rounded-xl shrink-0 flex items-center justify-center
-                                        bg-linear-to-br ${iconBg}
-                                        shadow-md shadow-green-500/20
-                                        group-hover:scale-110 transition-transform duration-200`}>
-                                        {icon}
-                                    </div>
+                                        {/* Icon badge */}
+                                        <div className={`w-11 h-11 rounded-xl shrink-0 flex items-center justify-center
+                                            bg-linear-to-br ${iconBg || 'from-green-500 to-emerald-700'}
+                                            shadow-md shadow-green-500/20
+                                            group-hover:scale-110 transition-transform duration-200`}>
+                                            {iconMap[icon] ?? iconMap['phone']}
+                                        </div>
 
-                                    <div className="flex flex-col min-w-0">
-                                        <span className="text-[0.6rem] font-bold uppercase tracking-widest text-green-500">
-                                            {label}
-                                        </span>
-                                        {href ? (
-                                            <a href={href}
-                                                className="text-sm font-extrabold text-green-900 hover:text-green-700
-                                                    transition-colors duration-150 truncate">
-                                                {value}
-                                            </a>
-                                        ) : (
-                                            <span className="text-sm font-extrabold text-green-900">{value}</span>
-                                        )}
-                                        <span className="text-xs text-green-700/50 font-medium">{sub}</span>
+                                        <div className="flex flex-col min-w-0">
+                                            <span className="text-[0.6rem] font-bold uppercase
+                                                tracking-widest text-green-500">
+                                                {label}
+                                            </span>
+                                            {href ? (
+                                                <a href={href}
+                                                    className="text-sm font-extrabold text-green-900
+                                                        hover:text-green-700 transition-colors duration-150 truncate">
+                                                    {value}
+                                                </a>
+                                            ) : (
+                                                <span className="text-sm font-extrabold text-green-900">
+                                                    {value}
+                                                </span>
+                                            )}
+                                            {sub && (
+                                                <span className="text-xs text-green-700/50 font-medium">
+                                                    {sub}
+                                                </span>
+                                            )}
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
-                        </div>
+                                ))}
+                            </div>
+                        )}
 
                         {/* Gradient divider */}
                         <div className="h-px bg-linear-to-r from-transparent via-green-300 to-transparent" />
 
-                        {/* Quick note */}
-                        <div className="p-5 rounded-2xl
-                            bg-linear-to-br from-green-500 via-emerald-600 to-teal-600
-                            border border-green-400/40 shadow-lg shadow-green-600/20">
-                            <p className="text-sm font-bold text-white/90 leading-relaxed">
-                                🏡 <span className="text-white">Site visits</span> are arranged within
-                                48 hours of inquiry. Our agents will call you to confirm a convenient time.
-                            </p>
-                        </div>
+                        {/* Quick note banner */}
+                        {data.quickNote && (
+                            <div className="p-5 rounded-2xl
+                                bg-linear-to-br from-green-500 via-emerald-600 to-teal-600
+                                border border-green-400/40 shadow-lg shadow-green-600/20">
+                                <p className="text-sm font-bold text-white/90 leading-relaxed">
+                                    🏡 {data.quickNote}
+                                </p>
+                            </div>
+                        )}
                     </div>
 
                     {/* ── RIGHT: Contact Form ── */}
@@ -152,19 +199,22 @@ export default function Contact() {
 
                         {submitted ? (
                             /* ── SUCCESS STATE ── */
-                            <div className="flex flex-col items-center justify-center text-center gap-5 py-10">
+                            <div className="flex flex-col items-center justify-center
+                                text-center gap-5 py-10">
                                 <div className="w-16 h-16 rounded-full bg-green-100 border border-green-200
                                     flex items-center justify-center">
                                     <CheckCircle className="w-8 h-8 text-emerald-500" />
                                 </div>
-                                <h3 className="text-2xl font-extrabold text-green-900">Message Sent!</h3>
+                                <h3 className="text-2xl font-extrabold text-green-900">
+                                    {data.successTitle || 'Message Sent!'}
+                                </h3>
                                 <p className="text-green-800/65 font-medium max-w-xs leading-relaxed">
-                                    Thank you for reaching out. One of our agents will get back to you within 24 hours.
+                                    {data.successMessage || 'Thank you for reaching out. One of our agents will get back to you within 24 hours.'}
                                 </p>
                                 <button
-                                    onClick={() => { setSubmitted(false); setForm({ name: '', email: '', phone: '', message: '' }); }}
-                                    className="px-6 py-2.5 rounded-xl font-extrabold text-xs uppercase tracking-widest
-                                        text-green-900 bg-green-50 border border-green-200
+                                    onClick={() => { setSubmitted(false); setForm(EMPTY_FORM); }}
+                                    className="px-6 py-2.5 rounded-xl font-extrabold text-xs uppercase
+                                        tracking-widest text-green-900 bg-green-50 border border-green-200
                                         hover:bg-green-100 hover:border-green-300 transition-all duration-200"
                                 >
                                     Send Another
@@ -175,10 +225,14 @@ export default function Contact() {
                             <form onSubmit={handleSubmit} className="flex flex-col gap-5">
 
                                 <div>
-                                    <h3 className="text-xl font-extrabold text-green-900">Send Us a Message</h3>
-                                    <p className="text-sm text-green-800/55 font-medium mt-1">
-                                        Fill in the form and we'll get back to you shortly.
-                                    </p>
+                                    <h3 className="text-xl font-extrabold text-green-900">
+                                        {data.formTitle || 'Send Us a Message'}
+                                    </h3>
+                                    {data.formSubtitle && (
+                                        <p className="text-sm text-green-800/55 font-medium mt-1">
+                                            {data.formSubtitle}
+                                        </p>
+                                    )}
                                 </div>
 
                                 {/* Name + Phone row */}
@@ -287,7 +341,7 @@ export default function Contact() {
                                     ) : (
                                         <>
                                             <Send className="w-4 h-4" />
-                                            Send Message
+                                            {data.formSubmitLabel || 'Send Message'}
                                         </>
                                     )}
                                 </button>
