@@ -2,7 +2,7 @@ export default {
     name: 'hero',
     title: 'hero section',
     type: 'document',
-    fields: [        // ← Fixed typo here
+    fields: [
 
         // ── BADGE ──────────────────────────────────────
         {
@@ -17,19 +17,19 @@ export default {
             name: 'headingLine1',
             title: 'Heading Line 1',
             type: 'string',
-            description: 'e.g:buy verified land',
+            description: 'e.g: Buy Verified Land',
         },
         {
-            name: 'headingLine2',   // ← You were missing this field
+            name: 'headingLine2',
             title: 'Heading Line 2',
             type: 'string',
-            description: 'eg:with ready title deeds',
+            description: 'e.g: with Ready Title Deeds',
         },
         {
             name: 'headingHighlight',
             title: 'Heading Highlight (Gradient Text)',
             type: 'string',
-            description: 'e.g Verified plots with clear title deeds — transparent buying, quick ownership transfer, and secure future investment.',
+            description: 'e.g. Ready Title Deeds',
         },
 
         // ── DESCRIPTION ─────────────────────────────────
@@ -50,13 +50,13 @@ export default {
 
         // ── CTA BUTTONS ────────────────────────────────
         {
-            name: 'ctaPrimaryLabel',      // ← Fixed: lowercase 'p' (consistency)
+            name: 'ctaPrimaryLabel',
             title: 'Primary Button Label',
             type: 'string',
             description: 'e.g. View Available Plots',
         },
         {
-            name: 'ctaPrimaryHref',       // ← Fixed: lowercase 'p'
+            name: 'ctaPrimaryHref',
             title: 'Primary Button Link',
             type: 'string',
             description: 'e.g. #properties',
@@ -65,21 +65,57 @@ export default {
             name: 'ctaSecondaryLabel',
             title: 'Secondary Button Label',
             type: 'string',
-            description: 'e.g. book a site visit',
+            description: 'e.g. Book a Site Visit',
         },
         {
             name: 'ctaSecondaryHref',
             title: 'Secondary Button Link',
             type: 'string',
-            description: 'e.g #contact',
+            description: 'e.g. #contact',
         },
 
         // ── BACKGROUND IMAGE ───────────────────────────
         {
-            name: 'backgroundImage',      // ← Fixed: use camelCase (no hyphens)
+            name: 'backgroundImage',
             title: 'Background Image',
             type: 'image',
             options: { hotspot: true },
+        },
+
+        // ── PROMO POSTER ───────────────────────────────
+        // Upload a new poster for each promotion (Easter, Christmas, New Year…).
+        // The hero component reads these two fields to render the right-hand
+        // poster panel — no code changes needed after the first deploy.
+        {
+            name: 'promoPoster',
+            title: 'Promo Poster Image',
+            type: 'image',
+            options: { hotspot: true },
+            description: 'The advertisement/promotion poster shown on the right side of the hero. Replace this whenever a new promo starts.',
+        },
+        {
+            name: 'promoPosterAlt',
+            title: 'Promo Poster Alt Text',
+            type: 'string',
+            description: 'Screen-reader description of the poster, e.g. "Happy Easter — Plot at 660K"',
+        },
+        {
+            name: 'promoPosterLabel',
+            title: 'Promo Poster Floating Label',
+            type: 'string',
+            description: 'Text shown in the "Current Offer" pill above the poster, e.g. "Current Offer" or "Easter Special"',
+        },
+        {
+            name: 'promoPosterCtaLabel',
+            title: 'Poster CTA Button Label',
+            type: 'string',
+            description: 'Label on the enquire button below the poster, e.g. "Enquire About This Offer"',
+        },
+        {
+            name: 'promoPosterCtaHref',
+            title: 'Poster CTA Button Link',
+            type: 'string',
+            description: 'Where the poster CTA links to, e.g. #contact',
         },
 
         // ── TRUST BADGES ───────────────────────────────
@@ -90,13 +126,13 @@ export default {
             of: [
                 {
                     type: 'object',
-                    name: 'trustBadge',        
-                    title: 'Trust Badge',     
+                    name: 'trustBadge',
+                    title: 'Trust Badge',
                     fields: [
                         { name: 'icon', title: 'Icon (emoji)', type: 'string' },
                         { name: 'label', title: 'Label', type: 'string' },
                     ],
-                    preview: {                 
+                    preview: {
                         select: { title: 'label', subtitle: 'icon' }
                     }
                 },
@@ -111,18 +147,18 @@ export default {
             of: [
                 {
                     type: 'object',
-                    name: 'stat',              
-                    title: 'Stat',            
+                    name: 'stat',
+                    title: 'Stat',
                     fields: [
                         { name: 'value', title: 'Value', type: 'string', description: 'e.g. 250+' },
                         { name: 'label', title: 'Label', type: 'string', description: 'e.g. Plots Sold' },
                     ],
-                    preview: {               
+                    preview: {
                         select: { title: 'value', subtitle: 'label' }
                     }
                 },
             ],
         },
-        
+
     ]
 }

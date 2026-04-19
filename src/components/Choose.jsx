@@ -105,8 +105,8 @@ export default function Choose() {
 
                 {/* ── CARDS GRID ── */}
                 {data.cards && data.cards.length > 0 && (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6">
-                        {data.cards.map((item, index) => (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6">
+                          {data.cards.filter(card => card !== null).map((item, index) => (  //
                             <div
                                 key={index}
                                 className={`group relative flex flex-col gap-5 p-7 rounded-3xl

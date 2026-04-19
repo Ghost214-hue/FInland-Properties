@@ -4,6 +4,8 @@ import features from './features';
 import location from './locations';
 import team from './team';
 import choose from './choose';
+import step from './step';
+import contact from './contact';
 
 export const schemaTypes = [
   // Document types
@@ -12,5 +14,7 @@ export const schemaTypes = [
  features,
  location,
  team,
- choose
+ choose,
+ step,
+ contact
 ]

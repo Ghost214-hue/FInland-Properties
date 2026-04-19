@@ -1,15 +1,13 @@
-import { createClient } from '@sanity/client';
-import imageUrlBuilder from '@sanity/image-url';
+// sanityClient.js
+import { createClient } from '@sanity/client'
+import imageUrlBuilder from '@sanity/image-url'
 
 export const client = createClient({
-  projectId: '5f1f4a00', // ← find this in fineland/sanity.config.js
-  dataset: 'hero',              // ← the dataset name you chose
-  apiVersion: '2024-01-01',
+  projectId: import.meta.env.VITE_SANITY_PROJECT_ID,
+  dataset: import.meta.env.VITE_SANITY_DATASET,
   useCdn: true,
-});
+  apiVersion: '2024-01-01',
+})
 
-// This lets us build image URLs from Sanity image objects
-const builder = imageUrlBuilder(client);
-export function urlFor(source) {
-  return builder.image(source);
-}
+const builder = imageUrlBuilder(client)
+export const urlFor = (source) => builder.image(source)
