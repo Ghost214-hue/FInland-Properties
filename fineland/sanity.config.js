@@ -8,7 +8,7 @@ export default defineConfig({
   title: 'fineland',
 
   projectId: '5f1f4a00',
-  dataset: 'hero',
+  dataset: 'production',
 
   plugins: [
     structureTool(),
